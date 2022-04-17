@@ -1,1 +1,1 @@
-web: python main:faang-predict
+web: gunicorn main:app
