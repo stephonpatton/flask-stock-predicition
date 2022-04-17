@@ -1,1 +1,1 @@
-web: python /flask-backend/main:faang-predict
+web: python main:faang-predict
