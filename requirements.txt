@@ -1,1 +1,15 @@
 gunicorn==20.1.0
+
+flask~=2.0.3
+pip~=21.2.4
+zlib~=1.2.11
+wheel~=0.37.1
+openssl~=1.1.1n
+markupsafe~=2.0.1
+werkzeug~=2.0.3
+dataclasses~=0.8
+jinja2~=3.0.3
+click~=8.0.4
+python-dotenv~=0.20.0
+itsdangerous~=2.0.1
+setuptools~=58.0.4
