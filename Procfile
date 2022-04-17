@@ -1,1 +1,1 @@
-web: gunicorn /flask-backend/main:faang-predict
+web: python /flask-backend/main:faang-predict
