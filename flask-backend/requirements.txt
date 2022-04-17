@@ -1,0 +1,9 @@
+certifi==2021.10.8
+click @ file:///opt/concourse/worker/volumes/live/17ca243b-fc66-462b-4bc1-f11ad524e336/volume/click_1646056621177/work
+Flask @ file:///opt/conda/conda-bld/flask_1648041541647/work
+gunicorn==20.1.0
+itsdangerous @ file:///tmp/build/80754af9/itsdangerous_1621432558163/work
+Jinja2 @ file:///opt/conda/conda-bld/jinja2_1647436528585/work
+MarkupSafe @ file:///opt/concourse/worker/volumes/live/1bcf0940-5bf8-4171-61e3-2133f5885e8b/volume/markupsafe_1621528148241/work
+python-dotenv==0.20.0
+Werkzeug @ file:///opt/conda/conda-bld/werkzeug_1645628268370/work
