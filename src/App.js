@@ -22,7 +22,9 @@ function App() {
 
     useEffect(() => {
     fetch('/models').then(res => res.json()).then(data => {
-      setModel(data.models["NNN"]);
+      console.log(data);
+      console.log(data.models);
+      setModel(data);
     });
   }, []);
 

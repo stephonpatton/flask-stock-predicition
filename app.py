@@ -24,16 +24,13 @@ def index():
 @app.route('/models')
 def models():
     return {
-        "models": {
-            "NNN": {
-                "name": "Stephon",
-                "age": 1
-            },
-            "RNNN": {
-                "name": "Bob",
-                "age": 12
-            }
-        }
+        "models": [{
+            "id": 2,
+            "name": "RNN"
+        }, {
+            "id": 3,
+            "name": "NNN"
+        }]
     }
 
 
