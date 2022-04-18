@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 gunicorn = "*"
-flask = "*"
+flask = ">=2.1.0"
 
 [dev-packages]
 
