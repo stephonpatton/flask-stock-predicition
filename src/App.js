@@ -22,14 +22,14 @@ function App() {
 
     useEffect(() => {
     fetch('/models').then(res => res.json()).then(data => {
-      setModel(data.models);
+      setModel(data.models["NNN"]);
     });
   }, []);
 
   return (
       <div className="App">
         <header className="App-header">
-
+        {/*FIGURE OUT ISSEU */}
             <p>The current model is {currentModel}</p>
           <p>The current time is {currentTime}.</p>
             <p>Saying is {currentSaying}</p>

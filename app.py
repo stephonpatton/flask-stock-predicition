@@ -23,7 +23,18 @@ def index():
 
 @app.route('/models')
 def models():
-    return {"models": {"NNN" : {"age": 1}}}
+    return {
+        "models": {
+            "NNN": {
+                "name": "Stephon",
+                "age": 1
+            },
+            "RNNN": {
+                "name": "Bob",
+                "age": 12
+            }
+        }
+    }
 
 
 if __name__ == "__main__":
