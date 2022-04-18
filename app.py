@@ -21,5 +21,10 @@ def index():
     return send_from_directory(app.static_folder, 'index.html')
 
 
+@app.route('/models')
+def models():
+    return {'models': {1, 'NNN'}}
+
+
 if __name__ == "__main__":
     app.run(debug=True)  # start the app
