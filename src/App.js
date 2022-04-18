@@ -30,9 +30,7 @@ function App() {
       <div className="App">
         <header className="App-header">
 
-          {/*... no changes in this part ...*/}
-kj;jj
-            <p>The current model is {currentModel}</p>
+            {/*<p>The current model is {currentModel}</p>*/}
           <p>The current time is {currentTime}.</p>
             <p>Saying is {currentSaying}</p>
         </header>
