@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import DropdownMenu from "./Dropdown";
 
 function App() {
   const [currentTime, setCurrentTime] = useState(0);
@@ -28,12 +29,13 @@ function App() {
     });
   }, []);
 
-  return (
+    return (
       <div className="App">
         <header className="App-header">
-        {/*FIGURE OUT ISSEU */}
-            <p>The current model is {currentModel}</p>
-          <p>The current time is {currentTime}.</p>
+          <DropdownMenu/>
+           {/*FIGURE OUT ISSEU */}
+            <p>The current model is {JSON.stringify(currentModel["models"], null, 2)} {currentModel.id}</p>
+            <p>The current time is {currentTime}.</p>
             <p>Saying is {currentSaying}</p>
         </header>
       </div>
