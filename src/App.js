@@ -22,7 +22,7 @@ function App() {
 
     useEffect(() => {
     fetch('/models').then(res => res.json()).then(data => {
-      setModel(data);
+      setModel(data.models);
     });
   }, []);
 
@@ -30,7 +30,7 @@ function App() {
       <div className="App">
         <header className="App-header">
 
-            {/*<p>The current model is {currentModel}</p>*/}
+            <p>The current model is {currentModel}</p>
           <p>The current time is {currentTime}.</p>
             <p>Saying is {currentSaying}</p>
         </header>
