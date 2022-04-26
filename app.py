@@ -20,6 +20,14 @@ def time():
 def index():
     return send_from_directory(app.static_folder, 'index.html')
 
+@app.route('/aapl')
+def aapl_index():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/goog')
+def goog_index():
+    return 'Fuckkkk'
+
 
 @app.route('/models')
 def models():
