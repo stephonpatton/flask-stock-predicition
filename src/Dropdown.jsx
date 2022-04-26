@@ -9,17 +9,23 @@ function DropdownMenu() {
             <h4>React-Bootstrap Dropdown Component</h4>
             <Dropdown>
                 <Dropdown.Toggle variant="success">
-                    Open Menu
+                    Ticker Symbols
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     <Dropdown.Item href="#">
-                        Home Page
+                        AAPL
                     </Dropdown.Item>
                     <Dropdown.Item href="#">
-                        Settings
+                        GOOG
                     </Dropdown.Item>
                     <Dropdown.Item href="#">
-                        Logout
+                        FB
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#">
+                        AMZN
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#">
+                        NFLX
                     </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
