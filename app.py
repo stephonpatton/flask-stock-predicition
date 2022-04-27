@@ -26,7 +26,7 @@ def aapl_index():
 
 @app.route('/goog')
 def goog_index():
-    return 'Fuckkkk'
+    return send_from_directory(app.static_folder, 'index.html')
 
 
 @app.route('/models')
