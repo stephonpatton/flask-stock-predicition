@@ -28,6 +28,18 @@ def aapl_index():
 def goog_index():
     return send_from_directory(app.static_folder, 'index.html')
 
+@app.route('/fb')
+def fb_index():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/nflx')
+def nflx_index():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/amzn')
+def amzn_index():
+    return send_from_directory(app.static_folder, 'index.html')
+
 
 @app.route('/models')
 def models():
