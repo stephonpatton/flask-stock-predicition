@@ -1,9 +1,9 @@
 import time as t
 from flask import Flask, send_from_directory, request, render_template
-import boto3
-client = boto3.client('runtime.sagemaker')
-print(client.connect_s3())
-print(client.list_models())
+# import boto3
+# client = boto3.client('runtime.sagemaker')
+# print(client.connect_s3())
+# print(client.list_models())
 
 app = Flask(__name__, static_folder='build', static_url_path='')
 
