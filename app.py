@@ -1,6 +1,5 @@
 import time as t
 from flask import Flask, send_from_directory, request, render_template
-import boto3
 import json
 
 
@@ -55,14 +54,6 @@ def models():
             "name": "NNN"
         }]
     }
-
-@app.route("/faang")
-def display_quote():
-    client = boto3.client('sagemaker')
-    runtime = boto3.Session().client('sagemaker-runtime')
-    print(client.list_models())
-    models = client.list_models()
-    return models
 
 
 if __name__ == "__main__":
