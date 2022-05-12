@@ -1,9 +1,8 @@
 import time as t
 from flask import Flask, send_from_directory, request, render_template
-# import boto3
-# client = boto3.client('runtime.sagemaker')
-# print(client.connect_s3())
-# print(client.list_models())
+import boto3
+import json
+
 
 app = Flask(__name__, static_folder='build', static_url_path='')
 
@@ -59,11 +58,11 @@ def models():
 
 @app.route("/faang")
 def display_quote():
-  symbol = request.args.get('symbol', default="AAPL")
-
-  quote = yf.Ticker(symbol)
-
-  return quote.info
+    client = boto3.client('sagemaker')
+    runtime = boto3.Session().client('sagemaker-runtime')
+    print(client.list_models())
+    models = client.list_models()
+    return models
 
 
 if __name__ == "__main__":

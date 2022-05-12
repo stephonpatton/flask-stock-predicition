@@ -98,7 +98,6 @@ function Apple() {
         fetch(`${API_URL}?${queryString.stringify(query)}`)
             .then(async data => setData(transformData(await data.json())))
             .catch(error => console.error(error))
-
     }, [from, to, symbol]);
 
     const handleChangeStock = event =>
@@ -116,14 +115,25 @@ function Apple() {
     const [prevPrice, setPrevPrice] = useState(-1);
     const [priceTime, setPriceTime] = useState(null);
 
+    function addPredictionData(data) {
+        for(let i = 0; i < 30; i++) {
+            data.c.push(i);
+            data.t.push((new Date().setDate(new Date().getDate() + i)/1000))
+        }
+
+
+    }
+
     function transformData(data) {
+        addPredictionData(data)
+        // data.c.push(20,30,40);
+        // data.t.push(new Date().getTime()/1000, new Date().setDate(new Date().getDate() + 1)/1000, new Date().setDate(new Date().getDate() + 2)/1000);
         return data.c.map((item, index) => ({
             close: Number(item).toFixed(2),
             open: Number(data.o[index]).toFixed(2),
             timestamp: new Date(data.t[index] * 1000).toLocaleDateString()
         }))
     }
-
 
 
 
@@ -171,12 +181,12 @@ function Apple() {
             {/*<div className="price-time">*/}
             {/*    {priceTime && priceTime.toLocaleTimeString()}*/}
             {/*</div>*/}
-            <Chart options={chart.options} series={series} type="candlestick" width="100%" height={450} />
+
 
             <div className="container">
                 <div className="selector">
                     <label htmlFor="stock_select" className="label">
-                        <strong>Stock Symbol: </strong>
+                        <strong>Stock Symbol: {Date.now()}</strong>
                     </label>
                     <select id="stock_select" onChange={handleChangeStock}>
                         {STOCK_SYMBOLS.map(s => <option key={s} value={s}>{s}</option>)}
@@ -206,6 +216,8 @@ function Apple() {
                     <Line type="monotone" dataKey="close" stroke="gray" dot={false} />
                 </LineChart>
             </ResponsiveContainer>
+
+            {/*<Chart options={chart.options} series={series} type="candlestick" width="100%" height={450} />*/}
         </div>
 
 
