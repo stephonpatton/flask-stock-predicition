@@ -8,6 +8,7 @@ import Chart from 'react-apexcharts';
 import "../css/Apple.css"
 import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 import queryString from "query-string";
+import aapl from '../stock_json/aapl.json'
 
 
 
@@ -16,6 +17,7 @@ async function getData() {
     const response = await fetch(aaplData);
     return response.json();
 }
+
 
 
 
@@ -100,6 +102,8 @@ function Apple() {
             .catch(error => console.error(error))
     }, [from, to, symbol]);
 
+
+
     const handleChangeStock = event =>
         setSymbol(event.target.value);
 
@@ -116,8 +120,14 @@ function Apple() {
     const [priceTime, setPriceTime] = useState(null);
 
     function addPredictionData(data) {
+        // console.log(aapl.t)
+        // console.log(aapl.c)
+        // data['pc'].push(2120);
+        var arr = [20, 22, 33]
+        data.pc = arr;
+        console.log(data)
         for(let i = 0; i < 30; i++) {
-            data.c.push(i);
+            data.c.push(aapl.c[i]);
             data.t.push((new Date().setDate(new Date().getDate() + i)/1000))
         }
 
@@ -128,6 +138,11 @@ function Apple() {
         addPredictionData(data)
         // data.c.push(20,30,40);
         // data.t.push(new Date().getTime()/1000, new Date().setDate(new Date().getDate() + 1)/1000, new Date().setDate(new Date().getDate() + 2)/1000);
+        // for(let i = data.c.length - 30; i < data.c.length; i++) {
+        //     return data.c.map((item, i) => ({
+        //         predictedClose: Number(data.c[i]).toFixed(2)
+        //     }))
+        // }
         return data.c.map((item, index) => ({
             close: Number(item).toFixed(2),
             open: Number(data.o[index]).toFixed(2),
@@ -214,6 +229,7 @@ function Apple() {
                     <Legend />
                     <Line type="monotone" dataKey="open" stroke="blue" dot={false} />
                     <Line type="monotone" dataKey="close" stroke="gray" dot={false} />
+                    {/*<Line type="monotone" dataKey="predictedClose" stroke="red" dot={false} />*/}
                 </LineChart>
             </ResponsiveContainer>
 
