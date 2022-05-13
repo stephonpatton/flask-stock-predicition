@@ -123,8 +123,18 @@ function Apple() {
         // console.log(aapl.t)
         // console.log(aapl.c)
         // data['pc'].push(2120);
-        var arr = [20, 22, 33]
-        data.pc = arr;
+        const predicted = [];
+        const predTimestamps = [];
+        for(let i = 0; i < data.c.length; i++){
+            predicted.push(data.c[i]);
+        }
+
+        for(let i = 0; i < 30; i++) {
+            predicted.push(aapl.c[i]);
+            predTimestamps.push(aapl.t[i]);
+        }
+        data.pc = predicted;
+        data.pt = predTimestamps;
         console.log(data)
         for(let i = 0; i < 30; i++) {
             data.c.push(aapl.c[i]);
@@ -146,6 +156,8 @@ function Apple() {
         return data.c.map((item, index) => ({
             close: Number(item).toFixed(2),
             open: Number(data.o[index]).toFixed(2),
+            predictions: Number(data.pc[index]).toFixed(2),
+            predictTime: new Date(data.pt[index] * 1000).toLocaleDateString(),
             timestamp: new Date(data.t[index] * 1000).toLocaleDateString()
         }))
     }
@@ -201,7 +213,7 @@ function Apple() {
             <div className="container">
                 <div className="selector">
                     <label htmlFor="stock_select" className="label">
-                        <strong>Stock Symbol: {Date.now()}</strong>
+                        <strong>Stock Symbol:</strong>
                     </label>
                     <select id="stock_select" onChange={handleChangeStock}>
                         {STOCK_SYMBOLS.map(s => <option key={s} value={s}>{s}</option>)}
@@ -223,13 +235,14 @@ function Apple() {
                            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="timestamp" />
+                    {/*<XAxis dataKey="predictTime" />*/}
                     <YAxis type="number" allowDecimals={true}
                            allowDataOverflow={true} />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="open" stroke="blue" dot={false} />
-                    <Line type="monotone" dataKey="close" stroke="gray" dot={false} />
-                    {/*<Line type="monotone" dataKey="predictedClose" stroke="red" dot={false} />*/}
+                    <Line type="monotone" strokeWidth={1.4} dataKey="open" stroke="blue" dot={false} />
+                    {/*<Line type="monotone" dataKey="close" stroke="green" dot={false} />*/}
+                    <Line type="monotone" dataKey="predictions" stroke="red" dot={false} />
                 </LineChart>
             </ResponsiveContainer>
 
