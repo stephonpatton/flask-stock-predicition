@@ -6,7 +6,18 @@ import "../css/Dropdown.css"
 import DropdownMenu from "./Dropdown";
 import Chart from 'react-apexcharts';
 import "../css/Apple.css"
-import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer} from 'recharts';
+import {
+    LineChart,
+    BarChart,
+    Line,
+    CartesianGrid,
+    XAxis,
+    YAxis,
+    Tooltip,
+    Legend,
+    ResponsiveContainer,
+    Bar
+} from 'recharts';
 import queryString from "query-string";
 import aapl from '../stock_json/aapl.json'
 
@@ -158,7 +169,8 @@ function Apple() {
             open: Number(data.o[index]).toFixed(2),
             predictions: Number(data.pc[index]).toFixed(2),
             predictTime: new Date(data.pt[index] * 1000).toLocaleDateString(),
-            timestamp: new Date(data.t[index] * 1000).toLocaleDateString()
+            timestamp: new Date(data.t[index] * 1000).toLocaleDateString(),
+            volume: Number(data.v[index])
         }))
     }
 
@@ -243,7 +255,31 @@ function Apple() {
                     <Line type="monotone" strokeWidth={1.4} dataKey="open" stroke="blue" dot={false} />
                     {/*<Line type="monotone" dataKey="close" stroke="green" dot={false} />*/}
                     <Line type="monotone" dataKey="predictions" stroke="red" dot={false} />
+                    {/*<Line type="monotone" dataKey="volume" stroke="red" dot={false} />*/}
                 </LineChart>
+            </ResponsiveContainer>
+
+            <ResponsiveContainer width="100%" height={300}>
+                <BarChart
+                    // width={500}
+                    height={300}
+                    data={data}
+                    margin={{
+                        top: 5,
+                        right: 35,
+                        left: 30,
+                        bottom: 5,
+                    }}
+                    barSize={20}
+                >
+                <XAxis dataKey="timestamp" scale="point" padding={{ left: 10, right: 10 }} />
+                <YAxis tick={{ fontSize: 14, width: 250 }}/>
+                <Tooltip />
+                <Legend />
+                <CartesianGrid strokeDasharray="3 3" />
+                <Bar dataKey="volume" fill="#8884d8" background={{ fill: '#eee' }} />
+
+                </BarChart>
             </ResponsiveContainer>
 
             {/*<Chart options={chart.options} series={series} type="candlestick" width="100%" height={450} />*/}
