@@ -9,7 +9,10 @@ import "../css/Apple.css"
 import {
     LineChart,
     BarChart,
+    ScatterChart,
     Line,
+    Scatter,
+    Cell,
     CartesianGrid,
     XAxis,
     YAxis,
@@ -136,20 +139,26 @@ function Apple() {
         // data['pc'].push(2120);
         const predicted = [];
         const predTimestamps = [];
-        for(let i = 0; i < data.c.length; i++){
+        for(let i = 0; i < data.c.length - 1; i++){
             predicted.push(data.c[i]);
         }
 
         for(let i = 0; i < 30; i++) {
-            predicted.push(aapl.c[i]);
-            predTimestamps.push(aapl.t[i]);
+            if(data.t[i] === aapl.t[i]) {
+                predicted.push(aapl.c[i]);
+                i++;
+            } else {
+                predicted.push(aapl.c[i]);
+                predTimestamps.push(aapl.t[i]);
+            }
         }
         data.pc = predicted;
         data.pt = predTimestamps;
         console.log(data)
         for(let i = 0; i < 30; i++) {
             data.c.push(aapl.c[i]);
-            data.t.push((new Date().setDate(new Date().getDate() + i)/1000))
+            data.t.push(data.pt[i]);
+            // data.t.push((new Date().setDate(new Date().getDate() + i)/1000))
         }
 
 
@@ -168,7 +177,7 @@ function Apple() {
             close: Number(item).toFixed(2),
             open: Number(data.o[index]).toFixed(2),
             predictions: Number(data.pc[index]).toFixed(2),
-            predictTime: new Date(data.pt[index] * 1000).toLocaleDateString(),
+            predictTime: new Date(data.pt[index] * 1000).toLocaleDateString(), //            predictTime: new Date(data.pt[index] * 1000).toLocaleDateString(),
             timestamp: new Date(data.t[index] * 1000).toLocaleDateString(),
             volume: Number(data.v[index])
         }))
@@ -282,18 +291,37 @@ function Apple() {
                 </BarChart>
             </ResponsiveContainer>
 
+            <ResponsiveContainer width="100%" height="100%">
+                <ScatterChart
+                    width={400}
+                    height={400}
+                    data={data}
+                    margin={{
+                        top: 20,
+                        right: 20,
+                        bottom: 20,
+                        left: 20,
+
+                    }}
+                >
+                    <CartesianGrid />
+                    <XAxis type="number" dataKey="timestamp" />
+                    <YAxis type="number" dataKey="close"/>
+                    <Tooltip cursor={{ strokeDasharray: '3 3' }} />
+                    <Scatter name="A school" fill="#8884d8" />
+                </ScatterChart>
+            </ResponsiveContainer>
+
             {/*<Chart options={chart.options} series={series} type="candlestick" width="100%" height={450} />*/}
         </div>
 
 
             //
             // TODO: body of text explaining apple stock, project etc
-            // TODO: Graph showing stock
 
             // TODO: Buy or sell indicator
             // TODO: Candle sticks for daily stock prices
-            // TODO: Past 30, 60, 90, 120 days stock prices
-            // TODO: Line chart with predictions (30 days)
+            // TODO: Fix date issue in graph (prediction should start on May 13 @ 154
             // TODO: Some other representation of physical numbers for predicted 30 day data (either chart or paragraph)
     );
 }
