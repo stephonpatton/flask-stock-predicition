@@ -304,6 +304,7 @@ function Apple() {
 
                     }}
                 >
+                    {/*// TODO: Figure out why this shit ain't working cuhhhhh*/}
                     <CartesianGrid />
                     <XAxis type="number" dataKey="timestamp" />
                     <YAxis type="number" dataKey="close"/>
