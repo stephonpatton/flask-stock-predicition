@@ -51,14 +51,15 @@ const chart = {
     options: {
         chart: {
             type: 'candlestick',
-            height: 350
+            height: 450
         },
         title: {
-            text: 'Apple Daily Candle Chart',
+            text: 'Google Daily Candle Chart',
             align: 'left'
         },
         xaxis: {
-            type: 'datetime'
+            type: 'datetime',
+            datetimeUTC: false
         },
         yaxis: {
             tooltip: {
@@ -117,7 +118,7 @@ function Google() {
 
     const [price, setPrice] = useState(-1);
     const [prevPrice, setPrevPrice] = useState(-1);
-    // const [priceTime, setPriceTime] = useState(null);
+    const [priceTime, setPriceTime] = useState(null);
     //
     function addPredictionData(data) {
         const predicted = [];
@@ -159,7 +160,7 @@ function Google() {
                 const goog = data.chart.result[0];
                 setPrevPrice(price);
                 setPrice(goog.meta.regularMarketPrice.toFixed(2));
-                // setPriceTime(new Date(aapl.meta.regularMarketTime * 1000));
+                setPriceTime(new Date(goog.meta.regularMarketTime * 1000));
                 const quote = goog.indicators.quote[0];
                 const prices = goog.timestamp.map((timestamp, index) => ({
                     x: new Date(timestamp * 1000),
