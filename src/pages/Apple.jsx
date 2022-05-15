@@ -1,5 +1,3 @@
-// https://finnhub.io/dashboard
-
 import React, {useEffect, useMemo, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import "../css/Dropdown.css"
@@ -119,8 +117,8 @@ function Apple() {
 
     const [price, setPrice] = useState(-1);
     const [prevPrice, setPrevPrice] = useState(-1);
-    const [priceTime, setPriceTime] = useState(null);
-
+    // const [priceTime, setPriceTime] = useState(null);
+    //
     function addPredictionData(data) {
         const predicted = [];
         const predTimestamps = [];
@@ -134,7 +132,6 @@ function Apple() {
         }
         data.pc = predicted;
         data.pt = predTimestamps;
-        console.log(data)
         for(let i = 0; i < 30; i++) {
             data.c.push(aapl.c[i]);
             data.t.push(aapl.t[i]);
@@ -162,7 +159,7 @@ function Apple() {
                 const aapl = data.chart.result[0];
                 setPrevPrice(price);
                 setPrice(aapl.meta.regularMarketPrice.toFixed(2));
-                setPriceTime(new Date(aapl.meta.regularMarketTime * 1000));
+                // setPriceTime(new Date(aapl.meta.regularMarketTime * 1000));
                 const quote = aapl.indicators.quote[0];
                 const prices = aapl.timestamp.map((timestamp, index) => ({
                     x: new Date(timestamp * 1000),
@@ -246,20 +243,10 @@ function Apple() {
                 <Legend />
                 <CartesianGrid strokeDasharray="3 3" />
                 <Bar dataKey="volume" fill="#8884d8" background={{ fill: '#eee' }} />
-
                 </BarChart>
             </ResponsiveContainer>
-
-
         </div>
-
-
-            //
             // TODO: body of text explaining apple stock, project etc
-
-            // TODO: Buy or sell indicator
-            // TODO: Candle sticks for daily stock prices
-            // TODO: Fix date issue in graph (prediction should start on May 13 @ 154
             // TODO: Some other representation of physical numbers for predicted 30 day data (either chart or paragraph)
     );
 }

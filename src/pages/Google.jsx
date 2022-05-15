@@ -2,13 +2,43 @@ import React, {useEffect, useMemo, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import "../css/Dropdown.css"
 import DropdownMenu from "./Dropdown";
-import Chart from 'react-apexcharts'
+import Chart from 'react-apexcharts';
+import "../css/Apple.css"
+import {
+    LineChart,
+    BarChart,
+    ScatterChart,
+    Line,
+    Scatter,
+    Cell,
+    CartesianGrid,
+    XAxis,
+    YAxis,
+    Tooltip,
+    Legend,
+    ResponsiveContainer,
+    Bar
+} from 'recharts';
+import queryString from "query-string";
+// import MaterialTable from "material-table";
 
 
-const googData = 'https://yahoo-finance-api.vercel.app/goog';
+import goog from '../stock_json/goog.json'
+
+const googData = 'https://yahoo-finance-api.vercel.app/GOOG';
 async function getData() {
     const response = await fetch(googData);
     return response.json();
+}
+
+const API_TOKEN = "c9mrn1qad3ie533htcn0";
+const STOCK_SYMBOLS = ["GOOG"]
+const INTERVAL_OPTIONS = [30, 60, 90, 120]
+const API_URL = "https://finnhub.io/api/v1/stock/candle"
+const RESOLUTION = "D"
+
+function getUnixTime(date) {
+    return date.getTime() / 1000 | 0;
 }
 
 const directionEmojis = {
@@ -17,53 +47,108 @@ const directionEmojis = {
     '': '',
 };
 
-
 const chart = {
     options: {
         chart: {
-            height: 400,
-            type: 'line',
-            zoom: {
-                enabled: true
-            }
+            type: 'candlestick',
+            height: 350
         },
-        dataLabels: {
-            enabled: false
-        },
-        // stroke: {
-        //     width: 5,
-        //     curve: 'straight'
-        // },
         title: {
-            text: 'Product Trends by Month',
+            text: 'Apple Daily Candle Chart',
             align: 'left'
-        },
-        grid: {
-            row: {
-                colors: ['#f3f3f3', 'transparent'], // takes an array which will be repeated on columns
-                opacity: 0.5
-            },
         },
         xaxis: {
             type: 'datetime'
+        },
+        yaxis: {
+            tooltip: {
+                enabled: true
+            }
         }
     },
-
 };
 
 const round = (number) => {
     return number ? +(number.toFixed(2)) : null;
 };
 
-
-
 function Google() {
+    const [symbol, setSymbol] = useState(STOCK_SYMBOLS[0])
+    const [data, setData] = useState(null);
+    const [interval, setInterval] = useState(INTERVAL_OPTIONS[3]);
+
+    const to = useMemo(() => {
+        return getUnixTime(new Date());
+    }, []);
+    const from = useMemo(() => {
+        let d = new Date();
+        d.setDate(d.getDate() - interval);
+
+        return getUnixTime(d);
+    }, [interval])
+
+    useEffect(() => {
+        if (!from || !to || !symbol) {
+            return;
+        }
+
+        const query = {
+            token: API_TOKEN,
+            resolution: RESOLUTION,
+            from,
+            to,
+            symbol
+        };
+
+        fetch(`${API_URL}?${queryString.stringify(query)}`)
+            .then(async data => setData(transformData(await data.json())))
+            .catch(error => console.error(error))
+    }, [from, to, symbol]);
+
+    const handleChangeStock = event =>
+        setSymbol(event.target.value);
+
+    const handleChangeInterval = event =>
+        setInterval(event.target.value);
+
     const [series, setSeries] = useState([{
         data: []
     }]);
+
     const [price, setPrice] = useState(-1);
     const [prevPrice, setPrevPrice] = useState(-1);
-    const [priceTime, setPriceTime] = useState(null);
+    // const [priceTime, setPriceTime] = useState(null);
+    //
+    function addPredictionData(data) {
+        const predicted = [];
+        const predTimestamps = [];
+        for(let i = 0; i < data.c.length; i++){
+            predicted.push(data.c[i]);
+        }
+
+        for(let i = 0; i < 30; i++) {
+            predicted.push(goog.c[i]);
+            predTimestamps.push(goog.t[i]);
+        }
+        data.pc = predicted;
+        data.pt = predTimestamps;
+        for(let i = 0; i < 30; i++) {
+            data.c.push(goog.c[i]);
+            data.t.push(goog.t[i]);
+        }
+    }
+
+    function transformData(data) {
+        addPredictionData(data)
+        return data.c.map((item, index) => ({
+            close: Number(item).toFixed(2),
+            open: Number(data.o[index]).toFixed(2),
+            predictions: Number(data.pc[index]).toFixed(2),
+            predictTime: new Date(data.pt[index] * 1000).toLocaleDateString(), //            predictTime: new Date(data.pt[index] * 1000).toLocaleDateString(),
+            timestamp: new Date(data.t[index] * 1000).toLocaleDateString(),
+            volume: Number(data.v[index])
+        }))
+    }
 
     useEffect(() => {
         let timeoutId;
@@ -74,7 +159,7 @@ function Google() {
                 const goog = data.chart.result[0];
                 setPrevPrice(price);
                 setPrice(goog.meta.regularMarketPrice.toFixed(2));
-                setPriceTime(new Date(goog.meta.regularMarketTime * 1000));
+                // setPriceTime(new Date(aapl.meta.regularMarketTime * 1000));
                 const quote = goog.indicators.quote[0];
                 const prices = goog.timestamp.map((timestamp, index) => ({
                     x: new Date(timestamp * 1000),
@@ -98,35 +183,72 @@ function Google() {
 
     const direction = useMemo(() => prevPrice < price ? 'up' : prevPrice > price ? 'down' : '', [prevPrice, price]);
 
-
     return (
         <div>
             <DropdownMenu/>
             <div className={['price', direction].join(' ')}>
-                {/*${price}*/}
                 ${price} {directionEmojis[direction]}
             </div>
-            <div className="price-time">
-                {priceTime && priceTime.toLocaleTimeString()}
+            <Chart options={chart.options} series={series} type="candlestick" width="100%" height={450} />
+
+            <div className="container">
+                <div className="selector">
+                    <label htmlFor="stock_select" className="label">
+                        <strong>Stock Symbol:</strong>
+                    </label>
+                    <select id="stock_select" onChange={handleChangeStock}>
+                        {STOCK_SYMBOLS.map(s => <option key={s} value={s}>{s}</option>)}
+                    </select>
+                </div>
+                <div className="selector">
+                    <label htmlFor="interval_select" className="label">
+                        <strong>Time Interval: </strong>
+                    </label>
+                    <select onChange={handleChangeInterval}>
+                        {INTERVAL_OPTIONS.map(s => <option key={s} value={s}>Past {s} days</option>)}
+                    </select>
+                </div>
             </div>
-            <Chart options={chart.options} series={series} type="line" width="100%" height={350} />
+
+            <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={data}
+                           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="timestamp"/>
+                    <YAxis type="number" allowDecimals={true}
+                           allowDataOverflow={true} domain={[2150, 3050]}/>
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" strokeWidth={1.4} dataKey="predictions" stroke="red" dot={false} />
+                    <Line type="monotone" dataKey="open" strokeWidth={2} stroke="green" dot={false} />
+                </LineChart>
+            </ResponsiveContainer>
+
+            <ResponsiveContainer width="100%" height={300}>
+                <BarChart
+                    width={500}
+                    height={300}
+                    data={data}
+                    margin={{
+                        top: 5,
+                        right: 35,
+                        left: 30,
+                        bottom: 5,
+                    }}
+                    barSize={20}
+                >
+                    <XAxis dataKey="timestamp" scale="point" padding={{ left: 10, right: 10 }} />
+                    <YAxis tick={{ fontSize: 14, width: 250 }}/>
+                    <Tooltip />
+                    <Legend />
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <Bar dataKey="volume" fill="#8884d8" background={{ fill: '#eee' }} />
+                </BarChart>
+            </ResponsiveContainer>
         </div>
-        //
         // TODO: body of text explaining apple stock, project etc
-        // TODO: Graph showing stock
-        // TODO: Other visualizations
-        // TODO: Buy or sell indicator
-        // TODO: Fix gaps in chart
-        // TOOD: Add more to chart
-        // TODO: Add custom points to chart
-        // Apple PAGE CUHHHHH
+        // TODO: Some other representation of physical numbers for predicted 30 day data (either chart or paragraph)
     );
 }
 
 export default Google;
-
-// TODO: Buy or sell indicator
-// TODO: Candle sticks for daily stock prices
-// TODO: Past 30, 60, 90, 120 days stock prices
-// TODO: Line chart with predictions (30 days)
-// TODO: Some other representation of physical numbers for predicted 30 day data (either chart or paragraph)
