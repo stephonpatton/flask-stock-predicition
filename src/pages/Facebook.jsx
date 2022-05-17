@@ -54,7 +54,7 @@ const chart = {
             height: 450
         },
         title: {
-            text: 'Facebook Daily Candle Chart',
+            text: 'Facebook Live Daily Candle Chart',
             align: 'left'
         },
         xaxis: {

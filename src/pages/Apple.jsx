@@ -59,7 +59,7 @@ const chart = {
             height: 350
         },
         title: {
-            text: 'Apple Daily Candle Chart',
+            text: 'Apple Live Daily Candle Chart',
             align: 'left'
         },
         xaxis: {

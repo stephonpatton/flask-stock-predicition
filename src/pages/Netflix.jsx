@@ -54,7 +54,7 @@ const chart = {
             height: 450
         },
         title: {
-            text: 'Netflix Daily Candle Chart',
+            text: 'Netflix Live Daily Candle Chart',
             align: 'left'
         },
         xaxis: {

@@ -7,8 +7,13 @@ function Home() {
     return (
         <div>
             <DropdownMenu/>
-            TODO: Front page has charts with all the stocks prices over the past 30 days
-            HOME PAGE CUHHHHH
+          <h1>Elite Investors Company</h1>
+            <body>
+            Here at Elite Investors Company, making sound and reliable investments is the key to our market domination.
+            </body>
+            <p>Please select a stock in the top right to get started
+            </p>
+            <footer>Elite Investors Co</footer>
         </div>
     );
 }

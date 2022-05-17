@@ -54,7 +54,7 @@ const chart = {
             height: 450
         },
         title: {
-            text: 'Amazon Daily Candle Chart',
+            text: 'Amazon Live Daily Candle Chart',
             align: 'left'
         },
         xaxis: {

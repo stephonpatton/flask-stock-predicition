@@ -54,7 +54,7 @@ const chart = {
             height: 450
         },
         title: {
-            text: 'Google Daily Candle Chart',
+            text: 'Google Live Daily Candle Chart',
             align: 'left'
         },
         xaxis: {
