@@ -1,3 +1,11 @@
 .home-page {
-    background-image: url("../images/download.jpg");
+
 }
+
+/*div {*/
+/*    background: url("../images/download.jpg") no-repeat center center fixed;*/
+/*    -webkit-background-size: cover;*/
+/*    -moz-background-size: cover;*/
+/*    -o-background-size: cover;*/
+/*    background-size: cover;*/
+/*}*/

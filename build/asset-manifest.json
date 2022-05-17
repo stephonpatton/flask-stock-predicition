@@ -1,16 +1,17 @@
 {
   "files": {
-    "main.css": "/static/css/main.7e82d61d.css",
-    "main.js": "/static/js/main.b1da070a.js",
+    "main.css": "/static/css/main.c017ac4c.css",
+    "main.js": "/static/js/main.83aeeea3.js",
     "static/js/787.4c072917.chunk.js": "/static/js/787.4c072917.chunk.js",
+    "static/media/best-and-worst-closed-end-funds.jpg": "/static/media/best-and-worst-closed-end-funds.f690b73496d2e3563452.jpg",
     "static/media/logo.svg": "/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/index.html",
-    "main.7e82d61d.css.map": "/static/css/main.7e82d61d.css.map",
-    "main.b1da070a.js.map": "/static/js/main.b1da070a.js.map",
+    "main.c017ac4c.css.map": "/static/css/main.c017ac4c.css.map",
+    "main.83aeeea3.js.map": "/static/js/main.83aeeea3.js.map",
     "787.4c072917.chunk.js.map": "/static/js/787.4c072917.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7e82d61d.css",
-    "static/js/main.b1da070a.js"
+    "static/css/main.c017ac4c.css",
+    "static/js/main.83aeeea3.js"
   ]
 }

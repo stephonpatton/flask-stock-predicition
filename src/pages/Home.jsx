@@ -14,14 +14,23 @@ function Home() {
             <body>
             </body>
             <p>Here at Elite Investors Company, making sound and reliable investments is the key to our market domination.</p>
+            <p>In order to do that, we must advance our field using Machine Learning to make reliable and accurate predictions when investing.</p>
             <p>After selecting a stock in the top right corner, each page will display multiple visualization for data about that stock.
-            The top of the page displays the current price of the stock with the indication of if the stock is currently going up or down.
-                Following that, a live daily candlestick chart is shown that is updated throughout the trading day.
-                The next graph shows the prediction data from the last trained model for the next 30 days (from the model training).
-                The following graph shows the historical open/close data for the stock and under that is the volume over a set number of days.
+            <p>The top of the page displays the current price of the stock with the indication of if the stock is currently going up or down.</p>
+            <p>Following that, a live daily candlestick chart is shown that is updated throughout the trading day.</p>
+            <p>The next graph shows the prediction data from the last trained model for the next 30 days (from the model training).</p>
+            <p>The following graph shows the historical open/close data for the stock and under that is the volume over a set number of days.</p>
+            <p></p>
+
             </p>
-            <p>Please select a stock in the top right to get started</p>
-            <footer>Elite Investors Co</footer>
+            <br></br>
+            <br></br>
+            <br></br>
+            <p><b>The models will need to be retrained every 30 days in order to provide new predictions.</b><br></br> This can be done
+            using the provided notebooks. The models are trained using a LSTM network, which is highly accurate and great for time series predictions.
+            </p>
+            <p>This project was built using React, JavaScript, HTML, CSS, and Python</p>
+            <p><b>Please select a stock in the top right to get started</b></p>
             <Footer/>
         </div>
     );
