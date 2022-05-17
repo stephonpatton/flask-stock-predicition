@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import "../css/Dropdown.css"
-import DropdownMenu from "./Dropdown";
+import DropdownMenu from "../components/Dropdown";
 import Chart from 'react-apexcharts';
 import "../css/Apple.css"
 import {

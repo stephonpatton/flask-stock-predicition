@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import './css/Dropdown.css'
-import DropdownMenu from "./pages/Dropdown";
+import DropdownMenu from "./components/Dropdown";
 import Home from "./pages/Home"
 import Amazon from "./pages/Amazon"
 import Apple from "./pages/Apple"

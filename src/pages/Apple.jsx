@@ -3,7 +3,8 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import "../css/Dropdown.css"
-import DropdownMenu from "./Dropdown";
+import DropdownMenu from "../components/Dropdown";
+import Footer from "../components/Footer"
 import Chart from 'react-apexcharts';
 import "../css/Apple.css"
 import {
@@ -264,11 +265,6 @@ function Apple() {
 
                 </BarChart>
             </ResponsiveContainer>
-
-
-
-
-
         </div>
 
 
