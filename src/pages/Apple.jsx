@@ -1,3 +1,5 @@
+// https://finnhub.io/dashboard
+
 import React, {useEffect, useMemo, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import "../css/Dropdown.css"
@@ -19,8 +21,9 @@ import {
     ResponsiveContainer,
     Bar
 } from 'recharts';
+
 import queryString from "query-string";
-// import MaterialTable from "material-table";
+import { Doughnut } from 'react-chartjs-2';
 
 
 import aapl from '../stock_json/aapl.json'
@@ -46,6 +49,9 @@ const directionEmojis = {
     down: '💩',
     '': '',
 };
+
+
+
 
 const chart = {
     options: {
@@ -75,7 +81,7 @@ const round = (number) => {
 function Apple() {
     const [symbol, setSymbol] = useState(STOCK_SYMBOLS[0])
     const [data, setData] = useState(null);
-    const [interval, setInterval] = useState(INTERVAL_OPTIONS[3]);
+    const [interval, setInterval] = useState(INTERVAL_OPTIONS[0]);
 
     const to = useMemo(() => {
         return getUnixTime(new Date());
@@ -117,14 +123,14 @@ function Apple() {
 
     const [price, setPrice] = useState(-1);
     const [prevPrice, setPrevPrice] = useState(-1);
-    // const [priceTime, setPriceTime] = useState(null);
-    //
+    const [priceTime, setPriceTime] = useState(null);
+
     function addPredictionData(data) {
         const predicted = [];
         const predTimestamps = [];
-        for(let i = 0; i < data.c.length; i++){
-            predicted.push(data.c[i]);
-        }
+        // for(let i = 0; i < data.c.length; i++){
+        //     predicted.push(data.c[i]);
+        // }
 
         for(let i = 0; i < 30; i++) {
             predicted.push(aapl.c[i]);
@@ -132,10 +138,8 @@ function Apple() {
         }
         data.pc = predicted;
         data.pt = predTimestamps;
-        for(let i = 0; i < 30; i++) {
-            data.c.push(aapl.c[i]);
-            data.t.push(aapl.t[i]);
-        }
+        console.log(data)
+
     }
 
     function transformData(data) {
@@ -159,7 +163,7 @@ function Apple() {
                 const aapl = data.chart.result[0];
                 setPrevPrice(price);
                 setPrice(aapl.meta.regularMarketPrice.toFixed(2));
-                // setPriceTime(new Date(aapl.meta.regularMarketTime * 1000));
+                setPriceTime(new Date(aapl.meta.regularMarketTime * 1000));
                 const quote = aapl.indicators.quote[0];
                 const prices = aapl.timestamp.map((timestamp, index) => ({
                     x: new Date(timestamp * 1000),
@@ -193,6 +197,7 @@ function Apple() {
 
             <div className="container">
                 <div className="selector">
+                    <strong>Apple Historical Data and Predictions</strong><br/>
                     <label htmlFor="stock_select" className="label">
                         <strong>Stock Symbol:</strong>
                     </label>
@@ -214,12 +219,26 @@ function Apple() {
                 <LineChart data={data}
                            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="timestamp"/>
+                    <XAxis dataKey="predictTime"/>
                     <YAxis type="number" allowDecimals={true}
                            allowDataOverflow={true} domain={[130, 180]}/>
                     <Tooltip />
                     <Legend />
                     <Line type="monotone" strokeWidth={1.4} dataKey="predictions" stroke="red" dot={false} />
+                    {/*<Line type="monotone" dataKey="predictTime" strokeWidth={2} stroke="green" dot={false} />*/}
+                </LineChart>
+            </ResponsiveContainer>
+
+            <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={data}
+                           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="timestamp"/>
+                    <YAxis type="number" allowDecimals={true}
+                           allowDataOverflow={true} domain={[130, 180]}/>
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" strokeWidth={1.4} dataKey="close" stroke="red" dot={false} />
                     <Line type="monotone" dataKey="open" strokeWidth={2} stroke="green" dot={false} />
                 </LineChart>
             </ResponsiveContainer>
@@ -243,10 +262,24 @@ function Apple() {
                 <Legend />
                 <CartesianGrid strokeDasharray="3 3" />
                 <Bar dataKey="volume" fill="#8884d8" background={{ fill: '#eee' }} />
+
                 </BarChart>
             </ResponsiveContainer>
+
+
+
+
+
         </div>
+
+
+
+            //
             // TODO: body of text explaining apple stock, project etc
+
+            // TODO: Buy or sell indicator
+            // TODO: Candle sticks for daily stock prices
+            // TODO: Fix date issue in graph (prediction should start on May 13 @ 154
             // TODO: Some other representation of physical numbers for predicted 30 day data (either chart or paragraph)
     );
 }

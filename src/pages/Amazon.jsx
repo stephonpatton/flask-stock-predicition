@@ -76,7 +76,7 @@ const round = (number) => {
 function Amazon() {
     const [symbol, setSymbol] = useState(STOCK_SYMBOLS[0])
     const [data, setData] = useState(null);
-    const [interval, setInterval] = useState(INTERVAL_OPTIONS[3]);
+    const [interval, setInterval] = useState(INTERVAL_OPTIONS[0]);
 
     const to = useMemo(() => {
         return getUnixTime(new Date());
@@ -123,9 +123,9 @@ function Amazon() {
     function addPredictionData(data) {
         const predicted = [];
         const predTimestamps = [];
-        for(let i = 0; i < data.c.length; i++){
-            predicted.push(data.c[i]);
-        }
+        // for(let i = 0; i < data.c.length; i++){
+        //     predicted.push(data.c[i]);
+        // }
 
         for(let i = 0; i < 30; i++) {
             predicted.push(amzn.c[i]);
@@ -133,10 +133,10 @@ function Amazon() {
         }
         data.pc = predicted;
         data.pt = predTimestamps;
-        for(let i = 0; i < 30; i++) {
-            data.c.push(amzn.c[i]);
-            data.t.push(amzn.t[i]);
-        }
+        // for(let i = 0; i < 30; i++) {
+        //     data.c.push(amzn.c[i]);
+        //     data.t.push(amzn.t[i]);
+        // }
     }
 
     function transformData(data) {
@@ -194,6 +194,7 @@ function Amazon() {
 
             <div className="container">
                 <div className="selector">
+                    <strong>Amazon Historical Data and Predictions</strong><br/>
                     <label htmlFor="stock_select" className="label">
                         <strong>Stock Symbol:</strong>
                     </label>
@@ -215,12 +216,26 @@ function Amazon() {
                 <LineChart data={data}
                            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="timestamp"/>
+                    <XAxis dataKey="predictTime"/>
                     <YAxis type="number" allowDecimals={true}
                            allowDataOverflow={true} domain={[2000, 3440]}/>
                     <Tooltip />
                     <Legend />
                     <Line type="monotone" strokeWidth={1.4} dataKey="predictions" stroke="red" dot={false} />
+                    {/*<Line type="monotone" dataKey="predictTime" strokeWidth={2} stroke="green" dot={false} />*/}
+                </LineChart>
+            </ResponsiveContainer>
+
+            <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={data}
+                           margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="timestamp"/>
+                    <YAxis type="number" allowDecimals={true}
+                           allowDataOverflow={true} domain={[2000, 3440]}/>
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" strokeWidth={1.4} dataKey="close" stroke="red" dot={false} />
                     <Line type="monotone" dataKey="open" strokeWidth={2} stroke="green" dot={false} />
                 </LineChart>
             </ResponsiveContainer>
