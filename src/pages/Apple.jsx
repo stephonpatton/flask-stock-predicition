@@ -23,7 +23,6 @@ import {
 } from 'recharts';
 
 import queryString from "query-string";
-import { Doughnut } from 'react-chartjs-2';
 
 
 import aapl from '../stock_json/aapl.json'
