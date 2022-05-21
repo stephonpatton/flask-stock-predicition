@@ -1,19 +1,13 @@
-// https://finnhub.io/dashboard
-
 import React, {useEffect, useMemo, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import "../css/Dropdown.css"
 import DropdownMenu from "../components/Dropdown";
-import Footer from "../components/Footer"
 import Chart from 'react-apexcharts';
 import "../css/Apple.css"
 import {
     LineChart,
     BarChart,
-    ScatterChart,
     Line,
-    Scatter,
-    Cell,
     CartesianGrid,
     XAxis,
     YAxis,
@@ -24,10 +18,7 @@ import {
 } from 'recharts';
 
 import queryString from "query-string";
-
-
 import aapl from '../stock_json/aapl.json'
-
 const aaplData = 'https://yahoo-finance-api.vercel.app/AAPL';
 async function getData() {
     const response = await fetch(aaplData);
@@ -49,9 +40,6 @@ const directionEmojis = {
     down: '💩',
     '': '',
 };
-
-
-
 
 const chart = {
     options: {
@@ -128,9 +116,6 @@ function Apple() {
     function addPredictionData(data) {
         const predicted = [];
         const predTimestamps = [];
-        // for(let i = 0; i < data.c.length; i++){
-        //     predicted.push(data.c[i]);
-        // }
 
         for(let i = 0; i < 30; i++) {
             predicted.push(aapl.c[i]);
@@ -139,7 +124,6 @@ function Apple() {
         data.pc = predicted;
         data.pt = predTimestamps;
         console.log(data)
-
     }
 
     function transformData(data) {
@@ -148,7 +132,7 @@ function Apple() {
             close: Number(item).toFixed(2),
             open: Number(data.o[index]).toFixed(2),
             predictions: Number(data.pc[index]).toFixed(2),
-            predictTime: new Date(data.pt[index] * 1000).toLocaleDateString(), //            predictTime: new Date(data.pt[index] * 1000).toLocaleDateString(),
+            predictTime: new Date(data.pt[index] * 1000).toLocaleDateString(),
             timestamp: new Date(data.t[index] * 1000).toLocaleDateString(),
             volume: Number(data.v[index])
         }))
@@ -225,7 +209,6 @@ function Apple() {
                     <Tooltip />
                     <Legend />
                     <Line type="monotone" strokeWidth={1.4} dataKey="predictions" stroke="red" dot={false} />
-                    {/*<Line type="monotone" dataKey="predictTime" strokeWidth={2} stroke="green" dot={false} />*/}
                 </LineChart>
             </ResponsiveContainer>
 
@@ -262,20 +245,9 @@ function Apple() {
                 <Legend />
                 <CartesianGrid strokeDasharray="3 3" />
                 <Bar dataKey="volume" fill="#8884d8" background={{ fill: '#eee' }} />
-
                 </BarChart>
             </ResponsiveContainer>
         </div>
-
-
-
-            //
-            // TODO: body of text explaining apple stock, project etc
-
-            // TODO: Buy or sell indicator
-            // TODO: Candle sticks for daily stock prices
-            // TODO: Fix date issue in graph (prediction should start on May 13 @ 154
-            // TODO: Some other representation of physical numbers for predicted 30 day data (either chart or paragraph)
     );
 }
 

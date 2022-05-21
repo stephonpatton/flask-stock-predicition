@@ -218,7 +218,7 @@ function Netflix() {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="predictTime"/>
                     <YAxis type="number" allowDecimals={true}
-                           allowDataOverflow={true} domain={[190, 250]}/>
+                           allowDataOverflow={true} domain={[150, 250]}/>
                     <Tooltip />
                     <Legend />
                     <Line type="monotone" strokeWidth={1.4} dataKey="predictions" stroke="red" dot={false} />
